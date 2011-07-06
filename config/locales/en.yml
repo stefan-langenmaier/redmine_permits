@@ -1,0 +1,8 @@
+# English strings go here for Rails i18n
+en:
+  label_permit: "Permission"
+  text_permit_edit: "Select a role and a tracker to edit the permissions"
+  label_permits_builtin_field: "Internal fields"
+  label_permits_custom_field: "Custom fields"
+  label_permits_access: "Access"
+  label_status: "Status"

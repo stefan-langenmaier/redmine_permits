@@ -1,0 +1,7 @@
+# English strings go here for Rails i18n
+pt:
+  label_permit: "Permissão"
+  text_permit_edit: "Seleccione um papel e uma categoria para editar as permissões"
+  label_permits_builtin_field: "Campos internos"
+  label_permits_custom_field: "Campos personalizados"
+  label_permits_access: "Acesso"

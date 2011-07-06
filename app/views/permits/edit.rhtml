@@ -1,0 +1,120 @@
+<%= render :partial => 'action_menu' %>
+
+<h2><%=l(:label_permit)%></h2>
+
+<p><%=l(:text_permit_edit)%>:</p>
+
+<% form_tag({}, :method => 'get') do %>
+<p>
+	<label><%=l(:label_role)%>:</label>
+	<%= select_tag 'role_id', options_from_collection_for_select(@roles, "id", "name", @role && @role.id) %>
+
+  <label><%=l(:label_tracker)%>:</label>
+	<%= select_tag 'tracker_id', options_from_collection_for_select(@trackers, "id", "name", @tracker && @tracker.id) %>
+
+  <label><%=l(:label_status)%>:</label>
+	<%= select_tag 'status_id', options_from_collection_for_select(@stati, "id", "name", @status && @status.id) %>
+  
+</p>
+<p>
+<%= submit_tag l(:button_edit), :name => nil %>
+</p>
+<% end %>
+
+
+<% if @tracker && @role && @status %>
+<% form_tag({}, :id => 'permit_form' ) do %>
+<%= hidden_field_tag 'tracker_id', @tracker.id %>
+<%= hidden_field_tag 'role_id', @role.id %>
+<%= hidden_field_tag 'status_id', @status.id %>
+<div class="autoscroll">
+<table class="list">
+<thead>
+	<tr>
+		<th align="left"><%=l(:label_permits_builtin_field)%></th>
+		<th align="center" colspan="2"><%=l(:label_permits_access)%></th>
+	</tr>
+	<tr>
+		<td></td>
+		<td align="center">
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permit-visible')",
+	                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			Visible
+		</td>
+		<td align="center">
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permit-')",
+	                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			Writable
+		</td>
+	</tr>
+</thead>
+<tbody>
+	<% for ifield in @builtin_fields %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td>
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permits-field-#{ifield.id}')",
+			                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			
+			<%= ifield.name %>
+		</td>
+		<td align="center">
+			<%= check_box_tag "permits[#{ ifield.id }][visible]", ifield.id, ifield.isVisible?(@role, @tracker, @status),
+						:class => "permits-fields-#{ifield.id} permissions-visible}" %>			
+		</td>
+		<td align="center">
+			<%= check_box_tag "permits[#{ ifield.id }][writable]", ifield.id, ifield.isWritable?(@role, @tracker, @status),
+						:class => "permits-fields-#{ifield.id} permissions-writable}" %>			
+		</td>
+
+	</tr>
+	<% end %>
+</tbody>
+<thead>
+	<tr>
+		<th align="left"><%=l(:label_permits_custom_field)%></th>
+		<th align="center" colspan="2"><%=l(:label_permits_access)%></th>
+	</tr>
+	<tr>
+		<td></td>
+		<td align="center">
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permit-visible')",
+	                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			Visible
+		</td>
+		<td align="center">
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permit-')",
+	                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			Writable
+		</td>
+	</tr>
+</thead>
+<tbody>
+	<% for ifield in @custom_fields %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td>
+			<%= link_to_function(image_tag('toggle_check.png'), "toggleCheckboxesBySelector('input.permits-field-#{ifield.id}')",
+			                                              			:title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}") %>
+			
+			<%= ifield.name %>
+		</td>
+		<td align="center">
+			<%= check_box_tag "permits[#{ ifield.id }][visible]", ifield.id, ifield.isVisible?(@role, @tracker, @status),
+						:class => "permits-fields-#{ifield.id} permissions-visible}" %>			
+		</td>
+		<td align="center">
+			<%= check_box_tag "permits[#{ ifield.id }][writable]", ifield.id, ifield.isWritable?(@role, @tracker, @status),
+						:class => "permits-fields-#{ifield.id} permissions-writable}" %>			
+		</td>
+
+	</tr>
+	<% end %>
+</tbody>
+</table>
+</div>
+<p><%= check_all_links 'permit_form' %></p>
+
+<%= submit_tag l(:button_save) %>
+<% end %>
+<% end %>
+
+<% html_title(l(:label_permit)) -%>

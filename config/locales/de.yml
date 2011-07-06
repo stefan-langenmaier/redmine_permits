@@ -1,0 +1,7 @@
+# English strings go here for Rails i18n
+de:
+  label_permit: "Berechtigung"
+  text_permit_edit: "Wählen sie eine Rolle und eine Tracker zum Bearbeiten der Berechtigung aus"
+  label_permits_builtin_field: "Interne Felder"
+  label_permits_custom_field: "Benutzerdefinierte Felder"
+  label_permits_access: "Zugriff"
