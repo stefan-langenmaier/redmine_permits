@@ -1,0 +1,13 @@
+<div class="splitcontentleft">
+<% i = 0 %>
+<% cfv = @issue.custom_field_values.reject{ |value| !(PermitsHelper.isVisible?(@issue, value.custom_field.id))} %>
+<% split_on = (cfv.size / 2.0).ceil - 1 %>
+<% cfv.each do |value| %>
+	<p><%= custom_field_tag_with_label :issue, value %></p>
+<% if i == split_on -%>
+</div><div class="splitcontentright">
+<% end -%>
+<% i += 1 -%>
+<% end -%>
+</div>
+<div style="clear:both;"> </div>
